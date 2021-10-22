@@ -2,11 +2,6 @@ import { Model, DataTypes } from "sequelize";
 
 module.exports = (sequelize) => {
   class Borrow extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       // define association here
       Borrow.belongsTo(models.User, {
