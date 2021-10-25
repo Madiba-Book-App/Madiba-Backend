@@ -27,13 +27,13 @@ module.exports = {
         type: new DataTypes.STRING(),
       },
       roleId: {
-        type: new DataTypes.STRING(),
+        type: new DataTypes.INTEGER(),
       },
       subscriptionId: {
-        type: new DataTypes.STRING(),
+        type: new DataTypes.INTEGER(),
       },
       genreId: {
-        type: new DataTypes.STRING(),
+        type: new DataTypes.INTEGER(),
       },
       createdAt: {
         allowNull: false,

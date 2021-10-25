@@ -36,7 +36,7 @@ module.exports = (sequelize) => {
         type: new DataTypes.STRING(),
       },
       generId: {
-        type: new DataTypes.STRING(),
+        type: new DataTypes.INTEGER(),
       },
       createdAt: {
         allowNull: false,

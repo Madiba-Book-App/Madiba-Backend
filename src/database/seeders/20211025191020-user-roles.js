@@ -1,5 +1,5 @@
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (queryInterface) => {
     queryInterface.bulkInsert(
       "roles",
       [
@@ -18,7 +18,7 @@ module.exports = {
     );
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface) => {
     queryInterface.bulkDelete("roles", null, {});
   },
 };
