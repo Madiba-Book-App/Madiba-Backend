@@ -1,6 +1,5 @@
 import { Model, DataTypes } from "sequelize";
 
-const { Model } = require("sequelize");
 module.exports = (sequelize) => {
   class Genre extends Model {
     static associate(models) {
