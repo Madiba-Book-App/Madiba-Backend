@@ -61,6 +61,7 @@ module.exports = (sequelize) => {
       roleId: {
         type: new DataTypes.INTEGER(),
         allowNull: false,
+        defaultValue: 2,
       },
       subscriptionId: {
         type: new DataTypes.INTEGER(),

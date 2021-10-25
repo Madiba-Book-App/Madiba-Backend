@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const hashPassword = (password) => bcrypt.hashSync(password);
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: async (queryInterface) => {
     queryInterface.bulkInsert(
       "users",
       [
@@ -24,7 +24,7 @@ module.exports = {
     );
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface) => {
     queryInterface.bulkDelete("users", null, {});
   },
 };
