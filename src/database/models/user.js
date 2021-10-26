@@ -87,25 +87,25 @@ module.exports = (sequelize) => {
     }
   );
 
-  User.beforeCreate(async (_user) => {
-    const user = _user;
-    if (user.password) {
-      user.password = await hashPassword(user.password);
-    }
-  });
+  // User.beforeCreate(async (_user) => {
+  //   const user = _user;
+  //   if (user.password) {
+  //     user.password = await hashPassword(user.password);
+  //   }
+  // });
 
-  User.beforeBulkUpdate(async (_user) => {
-    const { attributes } = _user;
-    if (attributes.password) {
-      attributes.password = await hashPassword(attributes.password);
-    }
-  });
+  // User.beforeBulkUpdate(async (_user) => {
+  //   const { attributes } = _user;
+  //   if (attributes.password) {
+  //     attributes.password = await hashPassword(attributes.password);
+  //   }
+  // });
 
-  User.prototype.comparePassword = async function compareUserPassword(
-    password
-  ) {
-    return comparePassword(password, this.get().password);
-  };
+  // User.prototype.comparePassword = async function compareUserPassword(
+  //   password
+  // ) {
+  //   return comparePassword(password, this.get().password);
+  // };
 
   return User;
 };
