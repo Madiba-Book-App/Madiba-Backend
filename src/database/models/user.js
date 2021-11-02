@@ -38,7 +38,6 @@ module.exports = (sequelize) => {
       },
       names: {
         type: new DataTypes.STRING(),
-        allowNull: false,
       },
       email: {
         type: new DataTypes.STRING(),
@@ -65,7 +64,7 @@ module.exports = (sequelize) => {
       },
       subscriptionId: {
         type: new DataTypes.INTEGER(),
-        allowNull: false,
+        allowNull: true,
       },
       genreId: {
         type: new DataTypes.INTEGER(),
@@ -82,30 +81,31 @@ module.exports = (sequelize) => {
     },
     {
       sequelize,
+      freezeTableName: true,
       modelName: "User",
       tableName: "users",
     }
   );
 
-  // User.beforeCreate(async (_user) => {
-  //   const user = _user;
-  //   if (user.password) {
-  //     user.password = await hashPassword(user.password);
-  //   }
-  // });
+  User.beforeCreate(async (_user) => {
+    const user = _user;
+    if (user.password) {
+      user.password = await hashPassword(user.password);
+    }
+  });
 
-  // User.beforeBulkUpdate(async (_user) => {
-  //   const { attributes } = _user;
-  //   if (attributes.password) {
-  //     attributes.password = await hashPassword(attributes.password);
-  //   }
-  // });
+  User.beforeBulkUpdate(async (_user) => {
+    const { attributes } = _user;
+    if (attributes.password) {
+      attributes.password = await hashPassword(attributes.password);
+    }
+  });
 
-  // User.prototype.comparePassword = async function compareUserPassword(
-  //   password
-  // ) {
-  //   return comparePassword(password, this.get().password);
-  // };
+  User.prototype.comparePassword = async function compareUserPassword(
+    password
+  ) {
+    return comparePassword(password, this.get().password);
+  };
 
   return User;
 };
