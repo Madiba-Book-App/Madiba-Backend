@@ -4,7 +4,7 @@ const hashPassword = (password) => bcrypt.hashSync(password);
 
 module.exports = {
   up: async (queryInterface) => {
-    queryInterface.bulkInsert(
+    return queryInterface.bulkInsert(
       "users",
       [
         {
@@ -25,6 +25,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    queryInterface.bulkDelete("users", null, {});
+    return queryInterface.bulkDelete("users", null, {});
   },
 };
