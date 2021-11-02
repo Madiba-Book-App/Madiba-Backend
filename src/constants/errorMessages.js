@@ -17,3 +17,4 @@ export const REQUIRED_FIELDS = "Please provide the required field";
 export const CHANGE_EMAIL = `Check your email to confirm your new email`;
 export const USER_NOT_FOUND = `sorry, user not found!!`;
 export const EMAIL_ALREADY_USED = `email already used`;
+export const GENRE_NOT_FOUND = `Genres not found`;

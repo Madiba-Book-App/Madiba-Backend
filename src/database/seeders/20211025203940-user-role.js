@@ -1,6 +1,6 @@
 module.exports = {
   up: async (queryInterface) => {
-    queryInterface.bulkInsert(
+    return queryInterface.bulkInsert(
       "roles",
       [
         {
@@ -19,6 +19,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    queryInterface.bulkDelete("roles", null, {});
+    return queryInterface.bulkDelete("roles", null, {});
   },
 };
