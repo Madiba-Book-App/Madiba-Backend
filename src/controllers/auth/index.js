@@ -1,7 +1,5 @@
 import db from "../../database/models";
 
-import * as helper from "../../helpers";
-
 import * as tokens from "../../utils/tokens";
 import * as status from "../../constants/httpStatusCodes";
 import * as errorMessages from "../../constants/errorMessages";
@@ -17,28 +15,13 @@ export default class AuthController {
    * @return {object} user information & token
    */
   static async signup(req, res) {
-    req.body.password = helper.password.hash(req.body.password);
     const newUser = await db.User.create(req.body);
-    const errors = newUser.errors
-      ? helper.checkCreateUpdateUserErrors(newUser.errors)
-      : null;
 
-    const payload = {
-      id: newUser.id,
-      role: newUser.role,
-      permissions: newUser.permissions,
-    };
-
-    const token = helper.token.generate(payload);
-    delete newUser.dataValues.password;
-
-    return errors
-      ? res.status(errors.code).json({ errors: errors.errors })
-      : res.status(status.HTTP_CREATED).json({
-          data: newUser,
-          token,
-          message: "User registered successfully",
-        });
+    return res.status(status.HTTP_CREATED).json({
+      status: status.HTTP_CREATED,
+      message: successMessages.SIGN_UP_CREATED,
+      user: { ...newUser.get(), password: undefined },
+    });
   }
 
   /**

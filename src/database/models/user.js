@@ -68,7 +68,7 @@ module.exports = (sequelize) => {
       },
       genreId: {
         type: new DataTypes.INTEGER(),
-        allowNull: false,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
