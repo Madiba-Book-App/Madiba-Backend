@@ -1,9 +1,9 @@
-import db from "../../database/models";
-
 import * as tokens from "../../utils/tokens";
 import * as status from "../../constants/httpStatusCodes";
 import * as errorMessages from "../../constants/errorMessages";
 import * as successMessages from "../../constants/successMessages";
+
+import db from "../../database/models";
 
 const { User } = db;
 
@@ -15,7 +15,7 @@ export default class AuthController {
    * @return {object} user information & token
    */
   static async signup(req, res) {
-    const newUser = await db.User.create(req.body);
+    const newUser = await User.create(req.body);
 
     return res.status(status.HTTP_CREATED).json({
       status: status.HTTP_CREATED,
