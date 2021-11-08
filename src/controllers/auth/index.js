@@ -1,8 +1,11 @@
-import * as helper from "../../helpers";
+import * as tokens from "../../utils/tokens";
+import * as status from "../../constants/httpStatusCodes";
+import * as errorMessages from "../../constants/errorMessages";
+import * as successMessages from "../../constants/successMessages";
+
 import db from "../../database/models";
 
-import status from "../../helpers/status";
-import { comparePassword } from "../../utils/password";
+const { User } = db;
 
 export default class AuthController {
   /**
@@ -12,63 +15,52 @@ export default class AuthController {
    * @return {object} user information & token
    */
   static async signup(req, res) {
-    req.body.password = helper.password.hash(req.body.password);
-    const newUser = await db.User.create(req.body);
-    const errors = newUser.errors
-      ? helper.checkCreateUpdateUserErrors(newUser.errors)
-      : null;
+    const newUser = await User.create(req.body);
 
-    const payload = {
-      id: newUser.id,
-      role: newUser.role,
-      permissions: newUser.permissions,
-    };
-
-    const token = helper.token.generate(payload);
-    delete newUser.dataValues.password;
-
-    return errors
-      ? res.status(errors.code).json({ errors: errors.errors })
-      : res.status(status.CREATED).json({
-          data: newUser,
-          token,
-          message: "User registered successfully",
-        });
+    return res.status(status.HTTP_CREATED).json({
+      status: status.HTTP_CREATED,
+      message: successMessages.SIGN_UP_CREATED,
+      user: { ...newUser.get(), password: undefined },
+    });
   }
 
   /**
    * @description - login user function
-   * @param {object} req user request
-   * @param {object} res  response form server
-   * @returns {object} user token
+   * @param {object} req
+   * @param {object} res
+   * @return {Promise} response object
    */
   static async login(req, res) {
     const { email, password } = req.body;
-    const checkUser = await db.User.findOne({ email });
-    if (Object.keys(checkUser).length > 0) {
-      const comparedPassword = comparePassword(
-        password,
-        checkUser.password || ""
-      );
+    const user = await User.findOne({ where: { email } });
 
-      console.log(`checkUser.password `, password, checkUser.password);
-      if (!comparedPassword) {
-        return res.status(status.UNAUTHORIZED).json({
-          errors: { credentials: "The credentials you provided are incorrect" },
-        });
-      }
-      const payload = {
-        id: checkUser.id,
-        role: checkUser.role,
-        permissions: checkUser.permissions,
-      };
-      const token = helper.token.generate(payload);
-      delete checkUser.password;
-      return res.status(status.OK).json({
-        message: "signIn successfully",
-        user: checkUser,
-        token,
+    if (!user?.get()?.email) {
+      return res.status(status.HTTP_NOT_FOUND).json({
+        status: status.HTTP_NOT_FOUND,
+        message: errorMessages.EMAIL_NOT_FOUND,
       });
     }
+
+    if (!(await user.comparePassword(password))) {
+      return res.status(status.HTTP_UNAUTHORIZED).json({
+        status: status.HTTP_UNAUTHORIZED,
+        message: errorMessages.BAD_CREDENTIALS,
+      });
+    }
+
+    const payload = {
+      id: user.get().id,
+      role: user.get().roleId,
+      names: user.get().names,
+    };
+
+    const token = tokens.generate(payload);
+
+    return res.status(status.HTTP_OK).json({
+      status: status.HTTP_OK,
+      message: successMessages.SIGNED_IN,
+      user: { ...user.get(), password: undefined },
+      token,
+    });
   }
 }

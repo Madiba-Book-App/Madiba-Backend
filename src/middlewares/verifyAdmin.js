@@ -1,5 +1,5 @@
-import * as status from '../constants/httpStatusCodes';
-import db from '../database/models/';
+import * as status from "../constants/httpStatusCodes";
+import db from "../database/models/";
 
 const { User } = db;
 
@@ -14,11 +14,12 @@ const { User } = db;
  */
 export default async (req, res, next) => {
   const id = req.user ? req.user.id : 0;
-  const requestUser = await User.findOne({ where: { id, role: 'admin' } });
+
+  const requestUser = await User.findOne({ where: { id, roleId: 1 } });
 
   if (!requestUser) {
     return res.status(status.HTTP_ACCESS_DENIED).json({
-      message: 'Permission denied, you are not allowed to perform this action'
+      message: "Permission denied, you are not allowed to perform this action",
     });
   }
   return next();

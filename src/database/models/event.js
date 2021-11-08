@@ -1,18 +1,12 @@
 import { Model, DataTypes } from "sequelize";
 
 module.exports = (sequelize) => {
-  class Book extends Model {
+  class Event extends Model {
     static associate(models) {
       // define association here
-      Book.belongsTo(models.Genre, {
-        as: "genre",
-        foreignKey: "genreId",
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      });
     }
   }
-  Book.init(
+  Event.init(
     {
       id: {
         allowNull: false,
@@ -23,24 +17,26 @@ module.exports = (sequelize) => {
       title: {
         type: new DataTypes.STRING(),
       },
-      author: {
-        type: new DataTypes.STRING(),
-      },
-      language: {
-        type: new DataTypes.STRING(),
-      },
       description: {
+        type: new DataTypes.TEXT(),
+      },
+      location: {
         type: new DataTypes.STRING(),
+      },
+      time: {
+        type: new DataTypes.STRING(),
+      },
+      date: {
+        type: new DataTypes.DATE(),
       },
       price: {
         type: new DataTypes.STRING(),
       },
-      genreId: {
-        type: new DataTypes.INTEGER(),
-      },
-      bookImage: {
+      places: {
         type: new DataTypes.STRING(),
-        allowNull: false,
+      },
+      eventImage: {
+        type: new DataTypes.STRING(),
       },
       cloudinaryImageId: {
         type: new DataTypes.STRING(),
@@ -56,9 +52,9 @@ module.exports = (sequelize) => {
     },
     {
       sequelize,
-      modelName: "Book",
-      tableName: "books",
+      modelName: "Event",
+      tableName: "events",
     }
   );
-  return Book;
+  return Event;
 };
