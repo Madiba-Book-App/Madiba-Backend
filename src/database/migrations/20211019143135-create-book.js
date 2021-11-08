@@ -24,8 +24,15 @@ module.exports = {
       price: {
         type: new DataTypes.STRING(),
       },
-      generId: {
+      genreId: {
         type: new DataTypes.INTEGER(),
+      },
+      bookImage: {
+        type: new DataTypes.STRING(),
+        allowNull: false,
+      },
+      cloudinaryImageId: {
+        type: new DataTypes.STRING(),
       },
       createdAt: {
         allowNull: false,
