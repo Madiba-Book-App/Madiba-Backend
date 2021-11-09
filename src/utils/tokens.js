@@ -9,23 +9,24 @@ import { INVALID_TOKEN } from "../constants/errorMessages";
  * @returns {string} the generated token
  */
 export const generate = (payload = {}, options) => {
-    try {
-        if (
-            typeof payload === "number" ||
-            payload === null ||
-            (typeof payload === "object" && !Object.keys(payload).length)
-        ) {
-            return null;
-        }
-
-        return jwt.sign(
-            payload,
-            String(process.env.JWT_SECRET_KEY),
-            options || { expiresIn: "1d" }
-        );
-    } catch (error) {
-        return null;
+  console.log(`pauload ======`, payload);
+  try {
+    if (
+      typeof payload === "number" ||
+      payload === null ||
+      (typeof payload === "object" && !Object.keys(payload).length)
+    ) {
+      return null;
     }
+
+    return jwt.sign(
+      payload,
+      String(process.env.JWT_SECRET_KEY),
+      options || { expiresIn: "1d" }
+    );
+  } catch (error) {
+    return null;
+  }
 };
 
 /**
@@ -33,12 +34,12 @@ export const generate = (payload = {}, options) => {
  * @returns {object} the decoded token
  */
 export const decode = (token) => {
-    try {
-        return {
-            success: true,
-            decoded: jwt.verify(token, String(process.env.JWT_SECRET_KEY))
-        };
-    } catch (error) {
-        return { success: false, error, message: INVALID_TOKEN };
-    }
+  try {
+    return {
+      success: true,
+      decoded: jwt.verify(token, String(process.env.JWT_SECRET_KEY)),
+    };
+  } catch (error) {
+    return { success: false, error, message: INVALID_TOKEN };
+  }
 };

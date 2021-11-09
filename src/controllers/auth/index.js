@@ -63,4 +63,44 @@ export default class AuthController {
       token,
     });
   }
+
+  /**
+   * @description - login user function
+   * @param {object} req
+   * @param {object} res
+   * @return {Promise} response object
+   */
+  static async login(req, res) {
+    const { email, password } = req.body;
+    const user = await User.findOne({ where: { email } });
+
+    if (!user?.get()?.email) {
+      return res.status(status.HTTP_NOT_FOUND).json({
+        status: status.HTTP_NOT_FOUND,
+        message: errorMessages.EMAIL_NOT_FOUND,
+      });
+    }
+
+    if (!(await user.comparePassword(password))) {
+      return res.status(status.HTTP_UNAUTHORIZED).json({
+        status: status.HTTP_UNAUTHORIZED,
+        message: errorMessages.BAD_CREDENTIALS,
+      });
+    }
+
+    const payload = {
+      id: user.get().id,
+      role: user.get().roleId,
+      names: user.get().names,
+    };
+
+    const token = tokens.generate(payload);
+
+    return res.status(status.HTTP_OK).json({
+      status: status.HTTP_OK,
+      message: successMessages.SIGNED_IN,
+      user: { ...user.get(), password: undefined },
+      token,
+    });
+  }
 }
