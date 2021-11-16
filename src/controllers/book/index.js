@@ -79,7 +79,7 @@ export default class BookController {
           books: fetchBooks,
         })
       : res
-          .status(status.HTTP_NOT_FOUND)
+          .status(status.HTTP_NO_CONTENT)
           .json({ errors: { books: errorMessages.BOOKS_NOT_FOUND } });
   }
 
@@ -100,7 +100,11 @@ export default class BookController {
     // Delete image from cloudinary
     await cloudinary.uploader.destroy(fetchBook.cloudinaryImageId);
 
-    const result = await cloudinary.uploader.upload(req.file.path);
+    let result;
+
+    if (req?.file?.path) {
+      result = await cloudinary.uploader.upload(req.file.path);
+    }
 
     const { title, author, language, description, price, genreId } = req.body;
 
@@ -112,8 +116,8 @@ export default class BookController {
         description: description || fetchBook.description,
         price: price || fetchBook.price,
         genreId: genreId || fetchBook.genreId,
-        bookImage: result.secure_url || fetchBook.bookImage,
-        cloudinaryImageId: result.public_id || fetchBook.cloudinaryImageId,
+        bookImage: result?.secure_url || fetchBook.bookImage,
+        cloudinaryImageId: result?.public_id || fetchBook.cloudinaryImageId,
       },
       {
         where: { id },
