@@ -10,3 +10,4 @@ export const EVENT_FOUND = "event list";
 export const ONE_EVENT_FOUND = "event detail";
 export const BOOK_DELETED = "Book deleted successfully";
 export const EVENT_DELETED = "Event deleted successfully";
+export const BOOK_BORROWED_SUCCESFULLY = "Book borrowed successfully";

@@ -18,7 +18,7 @@ module.exports = {
       status: {
         type: new DataTypes.ENUM("valid", "invalid"),
         allowNull: false,
-        defaultValue: "valid",
+        defaultValue: "invalid",
       },
       createdAt: {
         allowNull: false,
