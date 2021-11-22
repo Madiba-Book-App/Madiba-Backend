@@ -4,7 +4,8 @@
   "main": "app.js",
   "private": true,
   "scripts": {
-    "start": "concurrently \"npm run db:migrate:dev && npm run db:seed:dev\" \"babel-node ./src/app.js\"",
+    "start": "cross-env NODE_ENV=production node ./src/app.js",
+    "prestart": "cross-env NODE_ENV=production npm run db:migrate && cross-env NODE_ENV=production npm run db:seed",
     "dev": "nodemon --exec babel-node ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "db:migrate:dev": "./node_modules/.bin/sequelize db:migrate",
