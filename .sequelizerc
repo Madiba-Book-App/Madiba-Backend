@@ -1,11 +1,9 @@
 require('dotenv').config();
 const path = require('path');
 
-const dbFolderPath = process.env.NODE_ENV == 'dev' && './src/database';
-
 module.exports = {
-  'config': path.resolve(dbFolderPath + '/config', 'index.js'),
-  'models-path': path.resolve(dbFolderPath + '/models'),
-  'migrations-path': path.resolve(dbFolderPath + '/migrations/'),
-  'seeders-path': path.resolve(dbFolderPath + '/seeders'),
+  'config': path.resolve('./src/database' + '/config', 'index.js'),
+  'models-path': path.resolve('./src/database' + '/models'),
+  'migrations-path': path.resolve('./src/database' + '/migrations/'),
+  'seeders-path': path.resolve('./src/database' + '/seeders'),
 };
