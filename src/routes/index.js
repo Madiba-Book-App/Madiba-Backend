@@ -7,6 +7,7 @@ import users from "./users";
 import book from "./book";
 import event from "./event";
 import borrow from "./borrow";
+import subscription from "./subscription";
 
 const router = Router();
 
@@ -16,6 +17,7 @@ router.use("/users", users);
 router.use("/books", book);
 router.use("/events", event);
 router.use("/borrows", borrow);
+router.use("/subscriptions", subscription);
 router.use(api);
 
 export default router;

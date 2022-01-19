@@ -16,7 +16,6 @@ export default class BookController {
    */
   static async create(req, res) {
     const result = await cloudinary.uploader.upload(req.file.path);
-    console.log(`result`, result);
 
     const { title, author, language, description, price, genreId } = req.body;
 
