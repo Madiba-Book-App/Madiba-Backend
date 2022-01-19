@@ -82,6 +82,60 @@ export default class EventController {
   }
 
   /**
+   * @description Book update function
+   * @param {object} req
+   * @param {object} res
+   * @return {Promise} response object
+   */
+  static async update(req, res) {
+    const id = req.params.id;
+
+    // Fetch Book by id
+    const fetchEvent = await Event.findOne({
+      where: { id },
+    });
+
+    console.log(`fetchEvent ==>>>>`, fetchEvent);
+
+    // Delete image from cloudinary
+    await cloudinary.uploader.destroy(fetchEvent.cloudinaryImageId);
+
+    let result;
+
+    if (req?.file?.path) {
+      result = await cloudinary.uploader.upload(req.file.path);
+    }
+
+    const { title, location, time, description, date, price, places } =
+      req.body;
+
+    const updateBook = await Event.update(
+      {
+        title: title || fetchEvent.title,
+        location: location || fetchEvent.location,
+        time: time || fetchEvent.time,
+        description: description || fetchEvent.description,
+        date: date || fetchEvent.date,
+        price: price || fetchEvent.price,
+        places: places || fetchEvent.places,
+        eventImage: result?.secure_url || fetchEvent.eventImage,
+        cloudinaryImageId: result?.public_id || fetchEvent.cloudinaryImageId,
+      },
+      {
+        where: { id },
+        returning: true,
+        plain: true,
+      }
+    );
+
+    return res.status(status.HTTP_OK).json({
+      status: status.HTTP_OK,
+      message: successMessages.UPDATED,
+      user: { ...updateBook[1].dataValues },
+    });
+  }
+
+  /**
    * @description delete Book
    * @param {object} req
    * @param {object} res
