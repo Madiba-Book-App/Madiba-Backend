@@ -21,6 +21,7 @@ export const EMAIL_ALREADY_USED = `email already used`;
 export const GENRE_NOT_FOUND = `Genres not found`;
 export const USERS_NOT_FOUND = `Users not found`;
 export const BOOKS_NOT_FOUND = `Books not found`;
+export const SUBSCRIPTION_NOT_FOUND = `Subscription not found`;
 export const EVENT_NOT_FOUND = `Event not found`;
 export const EVENTS_NOT_FOUND = `Events not found`;
 export const BORROWS_NOT_FOUND = `Borrowed book not found`;

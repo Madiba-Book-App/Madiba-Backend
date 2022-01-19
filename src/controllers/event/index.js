@@ -82,7 +82,7 @@ export default class EventController {
   }
 
   /**
-   * @description Book update function
+   * @description Event update function
    * @param {object} req
    * @param {object} res
    * @return {Promise} response object
@@ -90,12 +90,10 @@ export default class EventController {
   static async update(req, res) {
     const id = req.params.id;
 
-    // Fetch Book by id
+    // Fetch Event by id
     const fetchEvent = await Event.findOne({
       where: { id },
     });
-
-    console.log(`fetchEvent ==>>>>`, fetchEvent);
 
     // Delete image from cloudinary
     await cloudinary.uploader.destroy(fetchEvent.cloudinaryImageId);
