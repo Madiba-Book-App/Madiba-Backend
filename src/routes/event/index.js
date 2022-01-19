@@ -20,6 +20,12 @@ router.post(
 
 router.get("/", verifyToken, errorHandlerAsync(EventController.getAll));
 router.get("/:id", verifyToken, errorHandlerAsync(EventController.getOne));
+router.put(
+  "/:id",
+  verifyToken,
+  upload.single("eventImage"),
+  errorHandlerAsync(EventController.update)
+);
 
 router.delete(
   "/:id",
