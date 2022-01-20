@@ -23,6 +23,9 @@ module.exports = (sequelize) => {
       description: {
         type: new DataTypes.STRING(),
       },
+      period: {
+        type: new DataTypes.STRING(),
+      },
       createdAt: {
         allowNull: false,
         type: new DataTypes.DATE(),
