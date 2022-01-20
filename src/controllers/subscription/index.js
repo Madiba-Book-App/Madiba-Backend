@@ -80,13 +80,14 @@ export default class SubscriptionController {
       where: { id },
     });
 
-    const { name, price, description } = req.body;
+    const { name, price, description, period } = req.body;
 
     const updateBook = await Subscription.update(
       {
         name: name || fetchSubscription.name,
         description: description || fetchSubscription.description,
         price: price || fetchSubscription.price,
+        period: period || fetchSubscription.period,
       },
       {
         where: { id },
