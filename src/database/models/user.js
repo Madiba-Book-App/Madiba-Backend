@@ -64,11 +64,15 @@ module.exports = (sequelize) => {
       },
       subscriptionId: {
         type: new DataTypes.INTEGER(),
-        allowNull: true,
+        allowNull: false,
       },
       genreId: {
         type: new DataTypes.INTEGER(),
         allowNull: true,
+      },
+      isPaid: {
+        type: new DataTypes.BOOLEAN(),
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,

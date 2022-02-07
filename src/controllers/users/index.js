@@ -2,7 +2,7 @@ import db from "../../database/models/";
 import * as status from "../../constants/httpStatusCodes";
 import * as errorMessages from "../../constants/errorMessages";
 
-const { User, Genre, Role } = db;
+const { User, Genre, Role, Subscription } = db;
 
 export default class userController {
   /**
@@ -16,6 +16,7 @@ export default class userController {
       include: [
         { model: Genre, as: "genre" },
         { model: Role, as: "role" },
+        { model: Subscription, as: "subscription" },
       ],
     });
 

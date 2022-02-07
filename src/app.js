@@ -8,6 +8,7 @@ import {
   HTTP_NOT_FOUND,
   HTTP_SERVER_ERROR,
 } from "./constants/httpStatusCodes.js";
+import "./jobs/";
 
 const app = express();
 
