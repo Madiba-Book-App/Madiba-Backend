@@ -31,6 +31,7 @@ module.exports = {
       },
       subscriptionId: {
         type: new DataTypes.INTEGER(),
+        allowNull: false,
       },
       genreId: {
         type: new DataTypes.INTEGER(),
